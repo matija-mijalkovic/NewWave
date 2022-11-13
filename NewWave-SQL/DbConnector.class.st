@@ -24,7 +24,7 @@ DbConnector >> connectToDb [
 	accessor := DatabaseAccessor forLogin: login.
 	accessor login.
 	
-	session := NewWaveDescriptorSystem sessionForLogin: login.
+	session := NewWaveGlorpDescriptorSystem sessionForLogin: login.
 	session login.
 	
 	 

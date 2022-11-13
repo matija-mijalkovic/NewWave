@@ -14,11 +14,16 @@ Class {
 	#superclass : #NWEvent,
 	#instVars : [
 		'attachedToRef',
-		'attechedToRefId',
-		'cancelActivity'
+		'cancelActivity',
+		'attachedToRefId'
 	],
 	#category : #'NewWave-Core'
 }
+
+{ #category : #accessing }
+NWBoundaryEvent >> attachedToRef: anObject [
+	attachedToRef := anObject.
+]
 
 { #category : #testing }
 NWBoundaryEvent >> cancelActivity [

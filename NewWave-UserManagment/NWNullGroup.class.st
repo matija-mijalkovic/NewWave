@@ -1,6 +1,6 @@
 Class {
 	#name : #NWNullGroup,
-	#superclass : #Group,
+	#superclass : #NWGroup,
 	#category : #'NewWave-UserManagment'
 }
 

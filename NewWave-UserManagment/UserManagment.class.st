@@ -20,12 +20,12 @@ UserManagment >> defineDefaultUserManagement [
 
 	userManagement addUser: user1.
 
-	group1 := Group new.
+	group1 := NWGroup new.
 	group1 groupId: '1'.
 	group1 groupName: 'admin'.
 	userManagement addGroup: group1.
 	
-	membership1 := Membership new.
+	membership1 := NWMembership new.
 	membership1 groupId: '1'.
 	membership1 userId: '1'.
 	userManagement addMembership: membership1.
@@ -87,27 +87,27 @@ UserManagment >> defineUserManagement [
 	user5 email: 'nemanja@nemanja.com'.
 	engine userManagement addUser: user5.
 
-	group1 := Group new.
+	group1 := NWGroup new.
 	group1 groupId: '1'.
 	group1 groupName: 'admin'.
 	engine userManagement addGroup: group1.
 	
-	group2 := Group new.
+	group2 := NWGroup new.
 	group2 groupId: '2'.
 	group2 groupName: 'HR'.
 	engine userManagement addGroup: group2.
 	
-	group3 := Group new.
+	group3 := NWGroup new.
 	group3 groupId: '3'.
 	group3 groupName: 'user'.
 	engine userManagement addGroup: group3.
 	
-	group4 := Group new.
+	group4 := NWGroup new.
 	group4 groupId: '4'.
 	group4 groupName: 'manufacturer'.
 	engine userManagement addGroup: group4.
 	
-	group5 := Group new.
+	group5 := NWGroup new.
 	group5 groupId: '5'.
 	group5 groupName: 'gold user'.
 	engine userManagement addGroup: group5.

@@ -76,6 +76,16 @@ NWUserManagement >> groups [
 	^ groups
 ]
 
+{ #category : #accessing }
+NWUserManagement >> id [
+	^ id
+]
+
+{ #category : #accessing }
+NWUserManagement >> id: anId [
+	id := anId. 
+]
+
 { #category : #initialization }
 NWUserManagement >> initialize [
 	super initialize.

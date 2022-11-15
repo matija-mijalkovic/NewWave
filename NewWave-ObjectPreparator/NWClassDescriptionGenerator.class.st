@@ -62,6 +62,11 @@ NWClassDescriptionGenerator >> checkIdField: nwClassDecsription [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+NWClassDescriptionGenerator >> collectAllInstVars [
+	^ anObject class allInstVarNames
+]
+
 { #category : #accessing }
 NWClassDescriptionGenerator >> collectInstVars [
 	^ anObject class instVarNames
@@ -83,7 +88,7 @@ NWClassDescriptionGenerator >> dodajUContainer: container [
 	"NWClassDescription can have simple and complex properties. Complex properties are again NWClassDescriptions.
 	If the property has possibleDateType then it's simple, it's complex otherwise."
 	
-	^ self collectInstVars collect: [ :each | 
+	^ self collectAllInstVars collect: [ :each | 
 		| desc postojiMoguciTip |	
 		postojiMoguciTip := self possibleDataTypes hasLiteral: ((anObject instVarNamed: each) class asString).
 		postojiMoguciTip ifFalse: [

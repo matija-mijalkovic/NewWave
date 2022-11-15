@@ -110,7 +110,7 @@ NWUserManagement >> loadGroups: pathToFile [
 		(NeoJSONReader on: readStream)
 		listClass: OrderedCollection;
 		for: #ArrayOfGroups
-			customDo: [ :mapping | mapping listOfElementSchema: Group ];
+			customDo: [ :mapping | mapping listOfElementSchema: NWGroup ];
 		 nextAs: #ArrayOfGroups ].
 ]
 
@@ -119,10 +119,10 @@ NWUserManagement >> loadMemberships: pathToMemberships [
 	^ memberships:= pathToMemberships asFileReference
 	readStreamDo: [ :readStream |
 		(NeoJSONReader on: readStream)
-		mapInstVarsFor: Membership ;
+		mapInstVarsFor: NWMembership ;
 		listClass: OrderedCollection;
 		for: #OrderedCollectionOfMembership
-			customDo: [ :mapping | mapping listOfElementSchema: Membership ];
+			customDo: [ :mapping | mapping listOfElementSchema: NWMembership ];
 		 nextAs: #OrderedCollectionOfMembership ].
 ]
 

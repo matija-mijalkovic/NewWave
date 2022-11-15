@@ -1,5 +1,5 @@
 Class {
-	#name : #Group,
+	#name : #NWGroup,
 	#superclass : #Object,
 	#instVars : [
 		'groupId',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-Group class >> neoJsonMapping: mapper [
+NWGroup class >> neoJsonMapping: mapper [
 	"For inheritance mapping to work, the schema/classname must be self,
 	but the instance variables have to be enumerated manually per class"
 	mapper for: #ArrayOfGroups
@@ -25,38 +25,38 @@ Group class >> neoJsonMapping: mapper [
 ]
 
 { #category : #adding }
-Group >> addUser: anElement [
+NWGroup >> addUser: anElement [
 	users add: anElement.
 ]
 
 { #category : #accessing }
-Group >> groupId [
+NWGroup >> groupId [
 	^ groupId
 ]
 
 { #category : #accessing }
-Group >> groupId: aGroupId [
+NWGroup >> groupId: aGroupId [
 	groupId := aGroupId
 ]
 
 { #category : #accessing }
-Group >> groupName [ 
+NWGroup >> groupName [ 
 	^ groupName
 ]
 
 { #category : #accessing }
-Group >> groupName: aName [
+NWGroup >> groupName: aName [
 	groupName := aName
 ]
 
 { #category : #initialization }
-Group >> initialize [
+NWGroup >> initialize [
 	super initialize.
 	
 ]
 
 { #category : #accessing }
-Group >> neoJsonMapping: mapper [
+NWGroup >> neoJsonMapping: mapper [
 	"For inheritance mapping to work, the schema/classname must be self,
 	but the instance variables have to be enumerated manually per class"
 	mapper for: #ArrayOfGroups do: [ :mapping |
@@ -64,11 +64,11 @@ Group >> neoJsonMapping: mapper [
 ]
 
 { #category : #accessing }
-Group >> subgroups [
+NWGroup >> subgroups [
 	^ subgroups 
 ]
 
 { #category : #accessing }
-Group >> users [ 	
+NWGroup >> users [ 	
 	^ users
 ]

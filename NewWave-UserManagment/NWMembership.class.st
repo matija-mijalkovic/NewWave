@@ -1,5 +1,5 @@
 Class {
-	#name : #Membership,
+	#name : #NWMembership,
 	#superclass : #Object,
 	#instVars : [
 		'groupId',
@@ -9,28 +9,28 @@ Class {
 }
 
 { #category : #accessing }
-Membership class >> neoJsonMapping: mapper [
+NWMembership class >> neoJsonMapping: mapper [
 	mapper for: #ArrayOfMemberships
 			customDo: [ :mapping | mapping listOfElementSchema: self ].
 	
 ]
 
 { #category : #accessing }
-Membership >> groupId [ 
+NWMembership >> groupId [ 
 	^ groupId.
 ]
 
 { #category : #accessing }
-Membership >> groupId: aGroupId [
+NWMembership >> groupId: aGroupId [
 	groupId := aGroupId.
 ]
 
 { #category : #accessing }
-Membership >> userId [
+NWMembership >> userId [
 	^ userId.
 ]
 
 { #category : #accessing }
-Membership >> userId: anUserId [
+NWMembership >> userId: anUserId [
 	userId:= anUserId.
 ]

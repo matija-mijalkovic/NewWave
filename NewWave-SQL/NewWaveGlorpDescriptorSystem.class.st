@@ -717,8 +717,8 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWScriptTask: aDescriptor [
 		from: #name  
 		to: (table fieldNamed: 'name').
 	(aDescriptor newMapping: DirectMapping)
-		from: #script   
-		to: (table fieldNamed: 'name').
+		from: #scriptAsString  
+		to: (table fieldNamed: 'script').
 		
 	linkTableSeq := self tableNamed: 'NWSEQUENCE'.
 	(aDescriptor toManyMapping)
@@ -833,7 +833,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWUser: aDescriptor [
 
 { #category : #descriptors }
 NewWaveGlorpDescriptorSystem >> descriptorForNWUserTask: aDescriptor [
-	| table linkTable linkTableGroup linkTableUser |
+	| table linkTableSeq |
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
@@ -846,28 +846,26 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWUserTask: aDescriptor [
 		from: #name  
 		to: (table fieldNamed: 'name').
 		
-	linkTable := self tableNamed: 'NWSEQUENCE'.
+	linkTableSeq := self tableNamed: 'NWSEQUENCE'.
 	(aDescriptor toManyMapping)
 		attributeName: #incomingFlows;
 		join: (Join
 					from: (table fieldNamed: 'id')
-					to: (linkTable fieldNamed: 'targetRef_id')).
+					to: (linkTableSeq fieldNamed: 'targetRef_id')).
 	(aDescriptor toManyMapping)
 		attributeName: #outgoingFlows;
 		join: (Join
 					from: (table fieldNamed: 'id')
-					to: (linkTable fieldNamed: 'sourceRef_id')).
+					to: (linkTableSeq fieldNamed: 'sourceRef_id')).
 	(aDescriptor toManyMapping)
 		attributeName: #boundaryEvents;
 		join: (Join
 					from: (table fieldNamed: 'id')
 					to: (table fieldNamed: 'attachedToRef_id')).
 					
-	linkTableGroup := self tableNamed: 'NWGROUP'.
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName:  #group.
-		
-	linkTableUser := self tableNamed: 'NWUSER'.
+
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName:  #user. 
 		

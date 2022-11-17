@@ -27,6 +27,18 @@ NWScriptTask >> script: aBlock [
 ]
 
 { #category : #accessing }
+NWScriptTask >> scriptAsString [ 
+	^ script asString 
+]
+
+{ #category : #accessing }
+NWScriptTask >> scriptAsString: aString [
+	script := OpalCompiler new
+		source: aString;
+		evaluate
+]
+
+{ #category : #accessing }
 NWScriptTask >> value [
 	^ script value
 ]

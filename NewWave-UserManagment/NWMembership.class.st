@@ -2,6 +2,7 @@ Class {
 	#name : #NWMembership,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'groupId',
 		'userId'
 	],
@@ -23,6 +24,16 @@ NWMembership >> groupId [
 { #category : #accessing }
 NWMembership >> groupId: aGroupId [
 	groupId := aGroupId.
+]
+
+{ #category : #accessing }
+NWMembership >> id [
+	^ id.
+]
+
+{ #category : #accessing }
+NWMembership >> id: anId [
+	id:= anId.
 ]
 
 { #category : #accessing }

@@ -27,6 +27,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWBaseTask: aClassModel [
 	aClassModel newAttributeNamed: #dataOutputAssociations collectionOf: NWDataObject.
 	"aClassModel newAttributeNamed: #elements collectionOf: Object."
 	aClassModel newAttributeNamed: #name type: String.
+	(aClassModel newAttributeNamed: #valueAsJSON) useDirectAccess: false.
 	aClassModel newAttributeNamed: #value.
 ]
 
@@ -47,7 +48,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWDataObject: aClassModel [
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #name type: String.
 	aClassModel newAttributeNamed: #itemDef.
-	aClassModel newAttributeNamed: #valuedDataObject.
+	(aClassModel newAttributeNamed: #valuedDataObjectAsJSON) useDirectAccess: false.
 	
 ]
 
@@ -114,6 +115,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWInclusive: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWMembership: aClassModel [
+	aClassModel newAttributeNamed: #id.
 	aClassModel newAttributeNamed: #groupId.
 	aClassModel newAttributeNamed: #userId.
 	
@@ -177,6 +179,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWSequence: aClassModel [
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #sourceRef type: NWNode.
 	aClassModel newAttributeNamed: #targetRef type: NWNode.
+	(aClassModel newAttributeNamed: #conditionAsString) useDirectAccess: false. 
 	 
 	
 ]
@@ -279,6 +282,9 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWBaseTask: aDescriptor [
 	(aDescriptor newMapping: DirectMapping)
 		from: #name  
 		to: (table fieldNamed: 'name').
+	(aDescriptor newMapping: DirectMapping)
+		from: #valueAsJSON    
+		to: (table fieldNamed: 'value').
 		
 	linkTableSeq := self tableNamed: 'NWSEQUENCE'.
 	(aDescriptor toManyMapping)
@@ -363,6 +369,9 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWDataObject: aDescriptor [
 	(aDescriptor newMapping: DirectMapping)
 		from: #name
 		to: (table fieldNamed: 'name').
+	(aDescriptor newMapping: DirectMapping)
+		from: #valuedDataObjectAsJSON 
+		to: (table fieldNamed: 'valuedDataObject').
 	(self typeResolverFor: NWElement) register: aDescriptor.
 ]
 
@@ -538,13 +547,13 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWGroup: aDescriptor [
 					from: (table fieldNamed: 'id')
 					to: (table fieldNamed: 'subgroupOf_id')).
 	
-	linkTable := self tableNamed: 'NWMEMBERSHIP'.
+	"linkTable := self tableNamed: 'NWMEMBERSHIP'.
 	(aDescriptor newMapping: ManyToManyMapping)
 		attributeName: #users;
 		referenceClass: NWUser;  
 		join: (Join
 					from: (table fieldNamed: 'id')
-					to: (linkTable fieldNamed: 'group_id')).	
+					to: (linkTable fieldNamed: 'group_id'))."	
 	
 ]
 
@@ -582,6 +591,9 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWMembership: aDescriptor [
 	| table |
 	table := self tableNamed: 'NWMEMBERSHIP'.
 	aDescriptor table: table.
+	(aDescriptor newMapping: DirectMapping)
+		from: #id 
+		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #groupId 
 		to: (table fieldNamed: 'group_id').
@@ -762,6 +774,9 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWSequence: aDescriptor [
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
 		to: (table fieldNamed: 'description').
+	(aDescriptor newMapping: DirectMapping)
+		from: #conditionAsString   
+		to: (table fieldNamed: 'condition').
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName: #sourceRef.
 	(aDescriptor newMapping: OneToOneMapping)
@@ -832,8 +847,50 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWUser: aDescriptor [
 ]
 
 { #category : #descriptors }
+NewWaveGlorpDescriptorSystem >> descriptorForNWUserManagement: aDescriptor [
+	| table linkTableUser linkTableGroup linkTableMembership |
+	table := self tableNamed: 'NWUSERMANAGEMENT'.
+	aDescriptor table: table.
+	(aDescriptor newMapping: DirectMapping)
+		from: #id 
+		to: (table fieldNamed: 'id').
+	(aDescriptor newMapping: DirectMapping)
+		from: #pathToUsers  
+		to: (table fieldNamed: 'pathToUsers').
+	(aDescriptor newMapping: DirectMapping)
+		from: #pathToGroups 
+		to: (table fieldNamed: 'pathToGroups').
+	
+	linkTableUser:= self tableNamed: 'NWUSER_ON_NWUSERMANAGEMENT'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #users;
+		referenceClass: NWUser;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTableUser fieldNamed: 'userManagement_id')).
+
+	linkTableGroup:= self tableNamed: 'NWGROUP_ON_NWUSERMANAGEMENT'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #groups;
+		referenceClass: NWGroup;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTableGroup fieldNamed: 'userManagement_id')).
+	
+	linkTableMembership := self tableNamed: 'NWMEMBERSHIP_ON_NWUSERMANAGEMENT'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #memberships;
+		referenceClass: NWMembership;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTableMembership fieldNamed: 'userManagement_id')).	
+		
+	
+]
+
+{ #category : #descriptors }
 NewWaveGlorpDescriptorSystem >> descriptorForNWUserTask: aDescriptor [
-	| table linkTableSeq |
+	| table linkTableSeq linkTableDataObj |
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
@@ -863,6 +920,14 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWUserTask: aDescriptor [
 					from: (table fieldNamed: 'id')
 					to: (table fieldNamed: 'attachedToRef_id')).
 					
+	linkTableDataObj := self tableNamed: 'NWNODE_ON_NWDATAOBJECT'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #dataOutputAssociations;
+		referenceClass: NWDataObject;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTableDataObj fieldNamed: 'baseActivity_id')).
+					
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName:  #group.
 
@@ -885,6 +950,9 @@ NewWaveGlorpDescriptorSystem >> tableForNWDATAOBJECT: aTable [
 	aTable
 		createFieldNamed: 'name'
 		type: (platform varChar: 50).
+	aTable
+		createFieldNamed: 'valuedDataObject'
+		type: (platform varChar: 5000).
 	 
 	
 ]
@@ -892,7 +960,7 @@ NewWaveGlorpDescriptorSystem >> tableForNWDATAOBJECT: aTable [
 { #category : #tables }
 NewWaveGlorpDescriptorSystem >> tableForNWGROUP: aTable [
 	| subgroupField |
-	(aTable createFieldNamed: 'id' type: (platform serial))
+	(aTable createFieldNamed: 'id' type: (platform integer))
 		bePrimaryKey.
 	aTable 
 		createFieldNamed: 'groupName'
@@ -910,22 +978,58 @@ NewWaveGlorpDescriptorSystem >> tableForNWGROUP: aTable [
 ]
 
 { #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWGROUP_ON_NWUSERMANAGEMENT: aTable [
+	| userManagementField groupField |
+	userManagementField  := aTable
+		createFieldNamed: 'userManagement_id' 
+		type: platform integer.
+	groupField := aTable
+		createFieldNamed: 'group_id' 
+		type: platform integer. 
+	aTable
+		addForeignKeyFrom: userManagementField   
+		to: ((self tableNamed: 'NWUSERMANAGEMENT') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: groupField 
+		to: ((self tableNamed: 'NWGROUP') fieldNamed: 'id').
+]
+
+{ #category : #tables }
 NewWaveGlorpDescriptorSystem >> tableForNWMEMBERSHIP: aTable [
 	| groupField userField |
+	(aTable createFieldNamed: 'id' type: (platform integer))
+		bePrimaryKey.
 	groupField := aTable
 		createFieldNamed: 'group_id' 
 		type: platform integer.
 	userField := aTable
 		createFieldNamed: 'user_id' 
 		type: platform integer. 
-	aTable
+	"aTable
 		addForeignKeyFrom: groupField  
 		to: ((self tableNamed: 'NWGROUP') fieldNamed: 'id').
 	aTable
 		addForeignKeyFrom: userField 
-		to: ((self tableNamed: 'NWUSER') fieldNamed: 'id').
+		to: ((self tableNamed: 'NWUSER') fieldNamed: 'id')."
 	
 	
+]
+
+{ #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWMEMBERSHIP_ON_NWUSERMANAGEMENT: aTable [
+	| userManagementField membershipField |
+	userManagementField  := aTable
+		createFieldNamed: 'userManagement_id' 
+		type: platform integer.
+	membershipField  := aTable
+		createFieldNamed: 'membership_id' 
+		type: platform integer. 
+	aTable
+		addForeignKeyFrom: userManagementField   
+		to: ((self tableNamed: 'NWUSERMANAGEMENT') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: membershipField 
+		to: ((self tableNamed: 'NWMEMBERSHIP') fieldNamed: 'id').
 ]
 
 { #category : #tables }
@@ -949,6 +1053,9 @@ NewWaveGlorpDescriptorSystem >> tableForNWNODE: aTable [
 		createFieldNamed: 'name'
 		type: (platform varChar: 50).
 	aTable
+		createFieldNamed: 'value'
+		type: (platform varChar: 300).	
+	aTable
 		createFieldNamed: 'script'
 		type: (platform varChar: 300).
 	groupField := aTable
@@ -967,9 +1074,6 @@ NewWaveGlorpDescriptorSystem >> tableForNWNODE: aTable [
 	aTable 
 		addForeignKeyFrom:  userField 
 		to: ((self tableNamed: 'NWUSER') fieldNamed: 'id'). 
-	"aTable 
-		createFieldNamed: 'event_type' 
-		type: (platform varChar: 20)."
 	 
 	
 ]
@@ -1022,6 +1126,9 @@ NewWaveGlorpDescriptorSystem >> tableForNWSEQUENCE: aTable [
 	aTable 
 		createFieldNamed: 'description'
 		type: (platform varChar: 100).
+	aTable 
+		createFieldNamed: 'condition'
+		type: (platform varChar: 300).
 	sourceRefField := aTable
 		createFieldNamed: 'sourceRef_id' 
 		type: platform integer.
@@ -1040,7 +1147,7 @@ NewWaveGlorpDescriptorSystem >> tableForNWSEQUENCE: aTable [
 
 { #category : #tables }
 NewWaveGlorpDescriptorSystem >> tableForNWUSER: aTable [
-	(aTable createFieldNamed: 'id' type: (platform serial))
+	(aTable createFieldNamed: 'id' type: (platform integer))
 		bePrimaryKey.
 	aTable 
 		createFieldNamed: 'username'
@@ -1073,6 +1180,23 @@ NewWaveGlorpDescriptorSystem >> tableForNWUSERMANAGEMENT: aTable [
 		type: (platform varChar: 100).
 	
 	
+]
+
+{ #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWUSER_ON_NWUSERMANAGEMENT: aTable [
+	| userManagementField userField |
+	userManagementField  := aTable
+		createFieldNamed: 'userManagement_id' 
+		type: platform integer.
+	userField := aTable
+		createFieldNamed: 'user_id' 
+		type: platform integer. 
+	aTable
+		addForeignKeyFrom: userManagementField   
+		to: ((self tableNamed: 'NWUSERMANAGEMENT') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: userField 
+		to: ((self tableNamed: 'NWUSER') fieldNamed: 'id').
 ]
 
 { #category : #'type resolvers' }

@@ -30,3 +30,19 @@ NWBaseTask >> value [
 NWBaseTask >> value: anObject [
 	value := anObject
 ]
+
+{ #category : #accessing }
+NWBaseTask >> valueAsJSON [
+	| descGenerator |
+	descGenerator := NWClassDescriptionGenerator new.
+	(descGenerator possibleDataTypes hasLiteral: (value class asString))
+		ifTrue: [ 
+			^ NeoJSONWriter toString: value.
+			 ].
+]
+
+{ #category : #accessing }
+NWBaseTask >> valueAsJSON: anObject [
+	value := NeoJSONReader fromString: anObject.
+
+]

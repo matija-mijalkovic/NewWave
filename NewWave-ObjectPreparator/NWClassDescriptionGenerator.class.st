@@ -88,7 +88,7 @@ NWClassDescriptionGenerator >> dodajUContainer: container [
 	"NWClassDescription can have simple and complex properties. Complex properties are again NWClassDescriptions.
 	If the property has possibleDateType then it's simple, it's complex otherwise."
 	
-	^ self collectAllInstVars collect: [ :each | 
+	^ self collectInstVars collect: [ :each | 
 		| desc postojiMoguciTip |	
 		postojiMoguciTip := self possibleDataTypes hasLiteral: ((anObject instVarNamed: each) class asString).
 		postojiMoguciTip ifFalse: [

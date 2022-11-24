@@ -15,11 +15,13 @@ Class {
 
 { #category : #'as yet unclassified' }
 ExampleExecutions class >> returnAcmeManagement [
-
-	^ NWUserManagement 				  						   
+	| userManagement |
+	"^ NWUserManagement 				  						   
 		pathToUsers:'/Users/sebastijan.kaplar/Desktop/NewWave-UserManagement/users.json'
 		pathToGroups: '/Users/sebastijan.kaplar/Desktop/NewWave-UserManagement/groups.json'
-		pathToMemberships: '/Users/sebastijan.kaplar/Desktop/NewWave-UserManagement/membership.json'.
+		pathToMemberships: '/Users/sebastijan.kaplar/Desktop/NewWave-UserManagement/membership.json'."
+	userManagement := UserManagment new.
+	^ userManagement defineDefaultUserManagement. 
 ]
 
 { #category : #'as yet unclassified' }
@@ -585,7 +587,7 @@ ExampleExecutions class >> returnSimpleProcessForDemo [
 	se description: 'Start'.
 
 	t1 := NWUserTask new.
-	t1 id: '123456'.
+	"t1 id: '123456'."
 	t1 description: 'Entering the address'.
 	t1 name: 'Address task'.
 	t1 value: 'Task1 value'.

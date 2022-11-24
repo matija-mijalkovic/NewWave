@@ -65,3 +65,17 @@ NWDataObject >> valuedDataObject [
 NWDataObject >> valuedDataObject: anObject [
 	valuedDataObject := anObject
 ]
+
+{ #category : #accessing }
+NWDataObject >> valuedDataObjectAsJSON [
+	| exporter |
+	exporter := NWClassJSONExporter new.
+	^ exporter exportOneNWClassDescriptionToJSON: valuedDataObject.  
+]
+
+{ #category : #accessing }
+NWDataObject >> valuedDataObjectAsJSON: json [
+	| importer |
+	importer := NWClassJSONImporter new.
+	valuedDataObject := importer importObjectFromJSON: json.
+]

@@ -127,6 +127,14 @@ WaveEngine >> reExecuteProcess: aProcessName [
 	processHandler startProcess.
 ]
 
+{ #category : #dependencies }
+WaveEngine >> release [
+	engineAnnouncer := nil.
+	pluginData := nil.
+	processHandlers := nil.
+	scheduler := nil.
+]
+
 { #category : #adding }
 WaveEngine >> restartProcess: aProcessName newProcess: proc1 [
 	| processHandler |

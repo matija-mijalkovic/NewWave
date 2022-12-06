@@ -31,7 +31,7 @@ Class {
 { #category : #'as yet unclassified' }
 NWProcess class >> id: anId name: aName initialFlowElement: anElement [
 	^ self new 
-		id: anId;
+		"id: anId;"
 		name: aName;
 		processInstanceId: (1 to: 1000000) atRandom asString;
 		initialFlowElement: anElement;

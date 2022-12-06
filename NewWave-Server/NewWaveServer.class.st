@@ -251,6 +251,15 @@ NewWaveServer >> registerRoutes [
 		
 ]
 
+{ #category : #dependencies }
+NewWaveServer >> release [
+	pendingTasks := nil.
+	pendingTasksCollection := nil.
+	engine := nil.
+	teapot := nil.
+	
+]
+
 { #category : #routes }
 NewWaveServer >> removeTask: aTask [
 	pendingTasksCollection remove: aTask.

@@ -128,6 +128,15 @@ NWExecutor >> processHandler: anEngine [
 	processHandler := anEngine
 ]
 
+{ #category : #dependencies }
+NWExecutor >> release [
+	waveAnnouncer := nil.
+	workers := nil.
+	flowHandler := nil.
+	processHandler := nil.
+	taskResult := nil.
+]
+
 { #category : #'as yet unclassified' }
 NWExecutor >> returnTKT: aTask [
 	^ TKTTask valuable: aTask.

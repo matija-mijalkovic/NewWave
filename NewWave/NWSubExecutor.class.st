@@ -51,6 +51,13 @@ NWSubExecutor >> processHandler: aProcessHandler [
 	processHandler := aProcessHandler
 ]
 
+{ #category : #dependencies }
+NWSubExecutor >> release [ 
+	executor := nil.
+	previousNode := nil.
+	processHandler := nil.
+]
+
 { #category : #finalization }
 NWSubExecutor >> startSubExecutor [
 	| worker |

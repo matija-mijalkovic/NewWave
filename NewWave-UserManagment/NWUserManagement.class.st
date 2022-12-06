@@ -2,6 +2,7 @@ Class {
 	#name : #NWUserManagement,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'groups',
 		'users',
 		'engine',

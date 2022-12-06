@@ -6,7 +6,7 @@ Class {
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWBaseActivity: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -19,7 +19,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWBaseActivity: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWBaseTask: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -27,12 +27,13 @@ NewWaveGlorpDescriptorSystem >> classModelForNWBaseTask: aClassModel [
 	aClassModel newAttributeNamed: #dataOutputAssociations collectionOf: NWDataObject.
 	"aClassModel newAttributeNamed: #elements collectionOf: Object."
 	aClassModel newAttributeNamed: #name type: String.
+	(aClassModel newAttributeNamed: #valueAsJSON) useDirectAccess: false.
 	aClassModel newAttributeNamed: #value.
 ]
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWBoundaryEvent: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -43,17 +44,17 @@ NewWaveGlorpDescriptorSystem >> classModelForNWBoundaryEvent: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWDataObject: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #name type: String.
 	aClassModel newAttributeNamed: #itemDef.
-	aClassModel newAttributeNamed: #valuedDataObject.
+	(aClassModel newAttributeNamed: #valuedDataObjectAsJSON) useDirectAccess: false.
 	
 ]
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWEndEvent: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -61,7 +62,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWEndEvent: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWEvent: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -69,7 +70,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWEvent: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWEventBasedGateway: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -78,7 +79,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWEventBasedGateway: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWExclusive: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -87,7 +88,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWExclusive: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWGateway: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -105,7 +106,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWGroup: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWInclusive: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -114,6 +115,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWInclusive: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWMembership: aClassModel [
+	aClassModel newAttributeNamed: #id.
 	aClassModel newAttributeNamed: #groupId.
 	aClassModel newAttributeNamed: #userId.
 	
@@ -121,7 +123,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWMembership: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWNode: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -130,7 +132,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWNode: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWParallel: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -139,7 +141,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWParallel: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWParallelJoin: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -148,18 +150,19 @@ NewWaveGlorpDescriptorSystem >> classModelForNWParallelJoin: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWProcess: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #initialFlowElement type: NWNode.
 	aClassModel newAttributeNamed: #name type: String. 
 	aClassModel newAttributeNamed: #managementName type: String.
+	aClassModel newAttributeNamed: #processInstanceId type: String.
 	aClassModel newAttributeNamed: #dataObjects collectionOf: NWDataObject.  
 	
 ]
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWScriptTask: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -173,17 +176,18 @@ NewWaveGlorpDescriptorSystem >> classModelForNWScriptTask: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWSequence: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #sourceRef type: NWNode.
 	aClassModel newAttributeNamed: #targetRef type: NWNode.
+	(aClassModel newAttributeNamed: #conditionAsString) useDirectAccess: false. 
 	 
 	
 ]
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWStartEvent: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -213,7 +217,7 @@ NewWaveGlorpDescriptorSystem >> classModelForNWUserManagement: aClassModel [
 
 { #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWUserTask: aClassModel [
-	aClassModel newAttributeNamed: #id.
+	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
 	aClassModel newAttributeNamed: #incomingFlows collectionOf: NWSequence.
 	aClassModel newAttributeNamed: #outgoingFlows collectionOf: NWSequence.
@@ -234,7 +238,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWBaseActivity: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -271,7 +275,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWBaseTask: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -279,6 +283,9 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWBaseTask: aDescriptor [
 	(aDescriptor newMapping: DirectMapping)
 		from: #name  
 		to: (table fieldNamed: 'name').
+	(aDescriptor newMapping: DirectMapping)
+		from: #valueAsJSON    
+		to: (table fieldNamed: 'value').
 		
 	linkTableSeq := self tableNamed: 'NWSEQUENCE'.
 	(aDescriptor toManyMapping)
@@ -318,7 +325,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWBoundaryEvent: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -355,7 +362,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWDataObject: aDescriptor [
 	table := self tableNamed: 'NWDATAOBJECT'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -363,6 +370,9 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWDataObject: aDescriptor [
 	(aDescriptor newMapping: DirectMapping)
 		from: #name
 		to: (table fieldNamed: 'name').
+	(aDescriptor newMapping: DirectMapping)
+		from: #valuedDataObjectAsJSON 
+		to: (table fieldNamed: 'valuedDataObject').
 	(self typeResolverFor: NWElement) register: aDescriptor.
 ]
 
@@ -377,7 +387,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWEndEvent: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -410,7 +420,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWEvent: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -439,7 +449,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWEventBasedGateway: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -468,7 +478,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWExclusive: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -497,7 +507,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWGateway: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -538,13 +548,13 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWGroup: aDescriptor [
 					from: (table fieldNamed: 'id')
 					to: (table fieldNamed: 'subgroupOf_id')).
 	
-	linkTable := self tableNamed: 'NWMEMBERSHIP'.
+	"linkTable := self tableNamed: 'NWMEMBERSHIP'.
 	(aDescriptor newMapping: ManyToManyMapping)
 		attributeName: #users;
 		referenceClass: NWUser;  
 		join: (Join
 					from: (table fieldNamed: 'id')
-					to: (linkTable fieldNamed: 'group_id')).	
+					to: (linkTable fieldNamed: 'group_id'))."	
 	
 ]
 
@@ -554,7 +564,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWInclusive: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -583,6 +593,9 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWMembership: aDescriptor [
 	table := self tableNamed: 'NWMEMBERSHIP'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
+		from: #id 
+		to: (table fieldNamed: 'id').
+	(aDescriptor newMapping: DirectMapping)
 		from: #groupId 
 		to: (table fieldNamed: 'group_id').
 	(aDescriptor newMapping: DirectMapping)
@@ -598,7 +611,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWNode: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -628,7 +641,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWParallel: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -657,7 +670,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWParallelJoin: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -686,7 +699,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWProcess: aDescriptor [
 	table := self tableNamed: 'NWPROCESS'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -697,6 +710,9 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWProcess: aDescriptor [
 	(aDescriptor newMapping: DirectMapping)
 		from: #managementName  
 		to: (table fieldNamed: 'managementName').
+	(aDescriptor newMapping: DirectMapping)
+		from: #processInstanceId  
+		to: (table fieldNamed: 'processInstanceId').	
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName: #initialFlowElement.
 	(self typeResolverFor: NWElement) register: aDescriptor.	 
@@ -708,7 +724,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWScriptTask: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -717,8 +733,8 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWScriptTask: aDescriptor [
 		from: #name  
 		to: (table fieldNamed: 'name').
 	(aDescriptor newMapping: DirectMapping)
-		from: #script   
-		to: (table fieldNamed: 'name').
+		from: #scriptAsString  
+		to: (table fieldNamed: 'script').
 		
 	linkTableSeq := self tableNamed: 'NWSEQUENCE'.
 	(aDescriptor toManyMapping)
@@ -757,11 +773,14 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWSequence: aDescriptor [
 	table := self tableNamed: 'NWSEQUENCE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
 		to: (table fieldNamed: 'description').
+	(aDescriptor newMapping: DirectMapping)
+		from: #conditionAsString   
+		to: (table fieldNamed: 'condition').
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName: #sourceRef.
 	(aDescriptor newMapping: OneToOneMapping)
@@ -776,7 +795,7 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWStartEvent: aDescriptor [
 	table := self tableNamed: 'NWNODE'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
-		from: #id 
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -832,12 +851,54 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWUser: aDescriptor [
 ]
 
 { #category : #descriptors }
-NewWaveGlorpDescriptorSystem >> descriptorForNWUserTask: aDescriptor [
-	| table linkTable linkTableGroup linkTableUser |
-	table := self tableNamed: 'NWNODE'.
+NewWaveGlorpDescriptorSystem >> descriptorForNWUserManagement: aDescriptor [
+	| table linkTableUser linkTableGroup linkTableMembership |
+	table := self tableNamed: 'NWUSERMANAGEMENT'.
 	aDescriptor table: table.
 	(aDescriptor newMapping: DirectMapping)
 		from: #id 
+		to: (table fieldNamed: 'id').
+	(aDescriptor newMapping: DirectMapping)
+		from: #pathToUsers  
+		to: (table fieldNamed: 'pathToUsers').
+	(aDescriptor newMapping: DirectMapping)
+		from: #pathToGroups 
+		to: (table fieldNamed: 'pathToGroups').
+	
+	linkTableUser:= self tableNamed: 'NWUSER_ON_NWUSERMANAGEMENT'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #users;
+		referenceClass: NWUser;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTableUser fieldNamed: 'userManagement_id')).
+
+	linkTableGroup:= self tableNamed: 'NWGROUP_ON_NWUSERMANAGEMENT'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #groups;
+		referenceClass: NWGroup;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTableGroup fieldNamed: 'userManagement_id')).
+	
+	linkTableMembership := self tableNamed: 'NWMEMBERSHIP_ON_NWUSERMANAGEMENT'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #memberships;
+		referenceClass: NWMembership;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTableMembership fieldNamed: 'userManagement_id')).	
+		
+	
+]
+
+{ #category : #descriptors }
+NewWaveGlorpDescriptorSystem >> descriptorForNWUserTask: aDescriptor [
+	| table linkTableSeq linkTableDataObj |
+	table := self tableNamed: 'NWNODE'.
+	aDescriptor table: table.
+	(aDescriptor newMapping: DirectMapping)
+		from: #idAsInt 
 		to: (table fieldNamed: 'id').
 	(aDescriptor newMapping: DirectMapping)
 		from: #description  
@@ -846,28 +907,34 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWUserTask: aDescriptor [
 		from: #name  
 		to: (table fieldNamed: 'name').
 		
-	linkTable := self tableNamed: 'NWSEQUENCE'.
+	linkTableSeq := self tableNamed: 'NWSEQUENCE'.
 	(aDescriptor toManyMapping)
 		attributeName: #incomingFlows;
 		join: (Join
 					from: (table fieldNamed: 'id')
-					to: (linkTable fieldNamed: 'targetRef_id')).
+					to: (linkTableSeq fieldNamed: 'targetRef_id')).
 	(aDescriptor toManyMapping)
 		attributeName: #outgoingFlows;
 		join: (Join
 					from: (table fieldNamed: 'id')
-					to: (linkTable fieldNamed: 'sourceRef_id')).
+					to: (linkTableSeq fieldNamed: 'sourceRef_id')).
 	(aDescriptor toManyMapping)
 		attributeName: #boundaryEvents;
 		join: (Join
 					from: (table fieldNamed: 'id')
 					to: (table fieldNamed: 'attachedToRef_id')).
 					
-	linkTableGroup := self tableNamed: 'NWGROUP'.
+	linkTableDataObj := self tableNamed: 'NWNODE_ON_NWDATAOBJECT'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #dataOutputAssociations;
+		referenceClass: NWDataObject;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTableDataObj fieldNamed: 'baseActivity_id')).
+					
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName:  #group.
-		
-	linkTableUser := self tableNamed: 'NWUSER'.
+
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName:  #user. 
 		
@@ -887,6 +954,9 @@ NewWaveGlorpDescriptorSystem >> tableForNWDATAOBJECT: aTable [
 	aTable
 		createFieldNamed: 'name'
 		type: (platform varChar: 50).
+	aTable
+		createFieldNamed: 'valuedDataObject'
+		type: (platform varChar: 5000).
 	 
 	
 ]
@@ -894,7 +964,7 @@ NewWaveGlorpDescriptorSystem >> tableForNWDATAOBJECT: aTable [
 { #category : #tables }
 NewWaveGlorpDescriptorSystem >> tableForNWGROUP: aTable [
 	| subgroupField |
-	(aTable createFieldNamed: 'id' type: (platform serial))
+	(aTable createFieldNamed: 'id' type: (platform integer))
 		bePrimaryKey.
 	aTable 
 		createFieldNamed: 'groupName'
@@ -912,22 +982,58 @@ NewWaveGlorpDescriptorSystem >> tableForNWGROUP: aTable [
 ]
 
 { #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWGROUP_ON_NWUSERMANAGEMENT: aTable [
+	| userManagementField groupField |
+	userManagementField  := aTable
+		createFieldNamed: 'userManagement_id' 
+		type: platform integer.
+	groupField := aTable
+		createFieldNamed: 'group_id' 
+		type: platform integer. 
+	aTable
+		addForeignKeyFrom: userManagementField   
+		to: ((self tableNamed: 'NWUSERMANAGEMENT') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: groupField 
+		to: ((self tableNamed: 'NWGROUP') fieldNamed: 'id').
+]
+
+{ #category : #tables }
 NewWaveGlorpDescriptorSystem >> tableForNWMEMBERSHIP: aTable [
 	| groupField userField |
+	(aTable createFieldNamed: 'id' type: (platform integer))
+		bePrimaryKey.
 	groupField := aTable
 		createFieldNamed: 'group_id' 
 		type: platform integer.
 	userField := aTable
 		createFieldNamed: 'user_id' 
 		type: platform integer. 
-	aTable
+	"aTable
 		addForeignKeyFrom: groupField  
 		to: ((self tableNamed: 'NWGROUP') fieldNamed: 'id').
 	aTable
 		addForeignKeyFrom: userField 
-		to: ((self tableNamed: 'NWUSER') fieldNamed: 'id').
+		to: ((self tableNamed: 'NWUSER') fieldNamed: 'id')."
 	
 	
+]
+
+{ #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWMEMBERSHIP_ON_NWUSERMANAGEMENT: aTable [
+	| userManagementField membershipField |
+	userManagementField  := aTable
+		createFieldNamed: 'userManagement_id' 
+		type: platform integer.
+	membershipField  := aTable
+		createFieldNamed: 'membership_id' 
+		type: platform integer. 
+	aTable
+		addForeignKeyFrom: userManagementField   
+		to: ((self tableNamed: 'NWUSERMANAGEMENT') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: membershipField 
+		to: ((self tableNamed: 'NWMEMBERSHIP') fieldNamed: 'id').
 ]
 
 { #category : #tables }
@@ -951,6 +1057,9 @@ NewWaveGlorpDescriptorSystem >> tableForNWNODE: aTable [
 		createFieldNamed: 'name'
 		type: (platform varChar: 50).
 	aTable
+		createFieldNamed: 'value'
+		type: (platform varChar: 300).	
+	aTable
 		createFieldNamed: 'script'
 		type: (platform varChar: 300).
 	groupField := aTable
@@ -969,9 +1078,6 @@ NewWaveGlorpDescriptorSystem >> tableForNWNODE: aTable [
 	aTable 
 		addForeignKeyFrom:  userField 
 		to: ((self tableNamed: 'NWUSER') fieldNamed: 'id'). 
-	"aTable 
-		createFieldNamed: 'event_type' 
-		type: (platform varChar: 20)."
 	 
 	
 ]
@@ -1007,6 +1113,9 @@ NewWaveGlorpDescriptorSystem >> tableForNWPROCESS: aTable [
 	aTable 
 		createFieldNamed: 'managementName' 
 		type: (platform varChar: 50).	
+	aTable 
+		createFieldNamed: 'processInstanceId' 
+		type: (platform varChar: 10).
 	initialFlowElementField := aTable
 		createFieldNamed: 'initialFlowElement_id' 
 		type: platform integer. 
@@ -1024,6 +1133,9 @@ NewWaveGlorpDescriptorSystem >> tableForNWSEQUENCE: aTable [
 	aTable 
 		createFieldNamed: 'description'
 		type: (platform varChar: 100).
+	aTable 
+		createFieldNamed: 'condition'
+		type: (platform varChar: 300).
 	sourceRefField := aTable
 		createFieldNamed: 'sourceRef_id' 
 		type: platform integer.
@@ -1042,7 +1154,7 @@ NewWaveGlorpDescriptorSystem >> tableForNWSEQUENCE: aTable [
 
 { #category : #tables }
 NewWaveGlorpDescriptorSystem >> tableForNWUSER: aTable [
-	(aTable createFieldNamed: 'id' type: (platform serial))
+	(aTable createFieldNamed: 'id' type: (platform integer))
 		bePrimaryKey.
 	aTable 
 		createFieldNamed: 'username'
@@ -1075,6 +1187,23 @@ NewWaveGlorpDescriptorSystem >> tableForNWUSERMANAGEMENT: aTable [
 		type: (platform varChar: 100).
 	
 	
+]
+
+{ #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWUSER_ON_NWUSERMANAGEMENT: aTable [
+	| userManagementField userField |
+	userManagementField  := aTable
+		createFieldNamed: 'userManagement_id' 
+		type: platform integer.
+	userField := aTable
+		createFieldNamed: 'user_id' 
+		type: platform integer. 
+	aTable
+		addForeignKeyFrom: userManagementField   
+		to: ((self tableNamed: 'NWUSERMANAGEMENT') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: userField 
+		to: ((self tableNamed: 'NWUSER') fieldNamed: 'id').
 ]
 
 { #category : #'type resolvers' }

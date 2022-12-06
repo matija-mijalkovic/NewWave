@@ -220,6 +220,19 @@ NWProcessHandler >> processScheduler [
 	^ processScheduler
 ]
 
+{ #category : #dependencies }
+NWProcessHandler >> release [
+	engineAnnouncer := nil.
+	engine := nil.
+	activations := nil.
+	joinHandler := nil.
+	subExecutors := nil.
+	workList := nil.
+	processScheduler := nil.
+	mainExecutor := nil.
+	process := nil.
+]
+
 { #category : #accessing }
 NWProcessHandler >> startProcess [
 	processScheduler start.

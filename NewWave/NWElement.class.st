@@ -58,3 +58,19 @@ NWElement >> id [
 NWElement >> id: anId [
 	id := anId
 ]
+
+{ #category : #accessing }
+NWElement >> idAsInt [ 
+	| isNumber |
+	id 
+		ifNil: [ ^ nil ].
+	isNumber := id isAllDigits.
+	isNumber 
+		ifTrue: [ ^ id asNumber ]
+		ifFalse: [ ^ nil ].
+]
+
+{ #category : #accessing }
+NWElement >> idAsInt: anId [
+	id := anId asString. 
+]

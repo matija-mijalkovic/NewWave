@@ -64,6 +64,18 @@ NWSequence >> condition: aCondition [
 ]
 
 { #category : #adding }
+NWSequence >> conditionAsString [
+	^ condition asString.
+]
+
+{ #category : #adding }
+NWSequence >> conditionAsString: aString [
+	condition := OpalCompiler new
+		source: aString;
+		evaluate 
+]
+
+{ #category : #adding }
 NWSequence >> ctype [
 	^ #NWSequence
 ]

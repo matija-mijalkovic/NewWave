@@ -5,6 +5,18 @@ Class {
 }
 
 { #category : #'class models' }
+NewWaveGlorpDescriptorSystem >> classModelForNWActivation: aClassModel [
+	aClassModel newAttributeNamed: #id.
+	aClassModel newAttributeNamed: #activated type: Boolean.
+	aClassModel newAttributeNamed: #completed type: Boolean.
+	aClassModel newAttributeNamed: #node type: NWNode.
+	aClassModel newAttributeNamed: #executor.
+	aClassModel newAttributeNamed: #properties.
+	aClassModel newAttributeNamed: #state.
+	
+]
+
+{ #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWBaseActivity: aClassModel [
 	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
@@ -87,6 +99,23 @@ NewWaveGlorpDescriptorSystem >> classModelForNWExclusive: aClassModel [
 ]
 
 { #category : #'class models' }
+NewWaveGlorpDescriptorSystem >> classModelForNWExecutor: aClassModel [
+	aClassModel newAttributeNamed: #id.
+	aClassModel newAttributeNamed: #flowHandler type: NWFlowHandler.
+	aClassModel newAttributeNamed: #processHandler type: NWProcessHandler.
+	(aClassModel newAttributeNamed: #taskResultAsJSON) useDirectAccess: false.
+]
+
+{ #category : #'class models' }
+NewWaveGlorpDescriptorSystem >> classModelForNWFlowHandler: aClassModel [
+	aClassModel newAttributeNamed: #id.
+	aClassModel newAttributeNamed: #workerid type: String.
+	aClassModel newAttributeNamed: #sequences collectionOf: NWSequence.
+	aClassModel newAttributeNamed: #node type: NWNode.
+	aClassModel newAttributeNamed: #currSeq type: NWSequence.
+]
+
+{ #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWGateway: aClassModel [
 	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
@@ -161,6 +190,15 @@ NewWaveGlorpDescriptorSystem >> classModelForNWProcess: aClassModel [
 ]
 
 { #category : #'class models' }
+NewWaveGlorpDescriptorSystem >> classModelForNWProcessHandler: aClassModel [
+	aClassModel newAttributeNamed: #id.
+	aClassModel newAttributeNamed: #activations dictionaryFrom: NWNode to: NWActivation.
+	aClassModel newAttributeNamed: #process type: NWProcess.
+	aClassModel newAttributeNamed: #mainExecutor type: NWExecutor.
+	(aClassModel newAttributeNamed: #running collectionOf: NWActivation) useDirectAccess: false. 
+]
+
+{ #category : #'class models' }
 NewWaveGlorpDescriptorSystem >> classModelForNWScriptTask: aClassModel [
 	(aClassModel newAttributeNamed: #idAsInt) useDirectAccess: false.
 	aClassModel newAttributeNamed: #description type: String.
@@ -229,6 +267,26 @@ NewWaveGlorpDescriptorSystem >> classModelForNWUserTask: aClassModel [
 	aClassModel newAttributeNamed: #user type: NWUser.
 	aClassModel newAttributeNamed: #value.
 	aClassModel newAttributeNamed: #result.
+	
+]
+
+{ #category : #descriptors }
+NewWaveGlorpDescriptorSystem >> descriptorForNWActivation: aDescriptor [
+	| table |
+	table := self tableNamed: 'NWACTIVATION'.
+	aDescriptor table: table.
+	(aDescriptor newMapping: DirectMapping)
+		from: #id 
+		to: (table fieldNamed: 'id').
+	(aDescriptor newMapping: DirectMapping)
+		from: #activated 
+		to: (table fieldNamed: 'activated').
+	(aDescriptor newMapping: DirectMapping)
+		from: #completed 
+		to: (table fieldNamed: 'completed').
+	(aDescriptor newMapping: OneToOneMapping)
+		attributeName: #node.
+		
 	
 ]
 
@@ -502,6 +560,56 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWExclusive: aDescriptor [
 ]
 
 { #category : #descriptors }
+NewWaveGlorpDescriptorSystem >> descriptorForNWExecutor: aDescriptor [
+	| table linkTable |
+	table := self tableNamed: 'NWEXECUTOR'.
+	aDescriptor table: table.
+	(aDescriptor newMapping: DirectMapping)
+		from: #id 
+		to: (table fieldNamed: 'id').
+	(aDescriptor newMapping: DirectMapping)
+		from: #taskResultAsJSON 
+		to: (table fieldNamed: 'taskResult').
+	(aDescriptor newMapping: OneToOneMapping)
+		attributeName: #flowHandler.
+	
+	linkTable := self tableNamed: 'NWPROCESSHANDLER'.
+	(aDescriptor newMapping: OneToOneMapping)
+		attributeName: #processHandler;
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTable fieldNamed: 'executor_id')).
+		
+	
+]
+
+{ #category : #descriptors }
+NewWaveGlorpDescriptorSystem >> descriptorForNWFlowHandler: aDescriptor [
+	| table linkTable |
+	table := self tableNamed: 'NWFLOWHANDLER'.
+	aDescriptor table: table.
+	(aDescriptor newMapping: DirectMapping)
+		from: #id 
+		to: (table fieldNamed: 'id').
+	(aDescriptor newMapping: DirectMapping)
+		from: #workerid 
+		to: (table fieldNamed: 'workerid').
+	(aDescriptor newMapping: OneToOneMapping)
+		attributeName: #node.
+	(aDescriptor newMapping: OneToOneMapping)
+		attributeName: #currSeq.
+	linkTable := self tableNamed: 'NWSEQUENCE_ON_NWFLOWHANDLER'.
+	(aDescriptor newMapping: ManyToManyMapping)
+		attributeName: #sequences;
+		referenceClass: NWSequence;  
+		join: (Join
+					from: (table fieldNamed: 'id')
+					to: (linkTable fieldNamed: 'flowHandler_id')).
+		
+	
+]
+
+{ #category : #descriptors }
 NewWaveGlorpDescriptorSystem >> descriptorForNWGateway: aDescriptor [
 	| table linkTable |
 	table := self tableNamed: 'NWNODE'.
@@ -716,6 +824,28 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWProcess: aDescriptor [
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName: #initialFlowElement.
 	(self typeResolverFor: NWElement) register: aDescriptor.	 
+]
+
+{ #category : #descriptors }
+NewWaveGlorpDescriptorSystem >> descriptorForNWProcessHandler: aDescriptor [
+	| table linkTable |
+	table := self tableNamed: 'NWPROCESSHANDLER'.
+	aDescriptor table: table.
+	(aDescriptor newMapping: DirectMapping)
+		from: #id 
+		to: (table fieldNamed: 'id').
+	(aDescriptor newMapping: OneToOneMapping)
+		attributeName: #mainExecutor.
+	(aDescriptor newMapping: OneToOneMapping)
+		attributeName: #process.
+	linkTable := self tableNamed: 'NWPROCESSHANDLER_ON_NWACTIVATION'.
+	(aDescriptor newMapping: DictionaryMapping)
+		attributeName: #activations;
+		referenceClass: NWActivation;
+		keyField: (linkTable fieldNamed: 'node_id');  
+		relevantLinkTableFields: (Array with: (linkTable fieldNamed: 'activation_id')).
+		
+	
 ]
 
 { #category : #descriptors }
@@ -945,6 +1075,28 @@ NewWaveGlorpDescriptorSystem >> descriptorForNWUserTask: aDescriptor [
 ]
 
 { #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWACTIVATION: aTable [
+	| node |
+	(aTable createFieldNamed: 'id' type: (platform serial))
+		bePrimaryKey.
+	aTable 
+		createFieldNamed: 'activated'
+		type: (platform boolean).
+	aTable 
+		createFieldNamed: 'completed'
+		type: (platform boolean).
+	node := aTable
+		createFieldNamed: 'node_id' 
+		type: platform integer. 
+	aTable
+		addForeignKeyFrom: node  
+		to: ((self tableNamed: 'NWNODE') fieldNamed: 'id').
+	
+	
+	
+]
+
+{ #category : #tables }
 NewWaveGlorpDescriptorSystem >> tableForNWDATAOBJECT: aTable [
 	(aTable createFieldNamed: 'id' type: (self sequenceTypeNamed: 'parent_seq'))
 		bePrimaryKey.
@@ -958,6 +1110,59 @@ NewWaveGlorpDescriptorSystem >> tableForNWDATAOBJECT: aTable [
 		createFieldNamed: 'valuedDataObject'
 		type: (platform varChar: 5000).
 	 
+	
+]
+
+{ #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWEXECUTOR: aTable [
+	| flowHandler processHandler |
+	(aTable createFieldNamed: 'id' type: (platform serial))
+		bePrimaryKey.
+	aTable
+		createFieldNamed: 'taskResult'
+		type: (platform varChar: 5000).
+	flowHandler := aTable
+		createFieldNamed: 'flowHandler_id' 
+		type: platform integer. 
+	"processHandler := aTable
+		createFieldNamed: 'processHandler_id' 
+		type: platform integer."
+	aTable
+		addForeignKeyFrom: flowHandler  
+		to: ((self tableNamed: 'NWFLOWHANDLER') fieldNamed: 'id').
+	"aTable
+		addForeignKeyFrom: processHandler  
+		to: ((self tableNamed: 'NWPROCESSHANDLER') fieldNamed: 'id')."
+	
+	
+	
+]
+
+{ #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWFLOWHANDLER: aTable [
+	| node sequence |
+	(aTable createFieldNamed: 'id' type: (platform serial))
+		bePrimaryKey.
+	aTable 
+		createFieldNamed: 'workerid'
+		type: (platform varchar: 200).
+	aTable 
+		createFieldNamed: 'completed'
+		type: (platform boolean).
+	node := aTable
+		createFieldNamed: 'node_id' 
+		type: platform integer. 
+	sequence := aTable
+		createFieldNamed: 'sequence_id' 
+		type: platform integer.
+	aTable
+		addForeignKeyFrom: node  
+		to: ((self tableNamed: 'NWNODE') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: sequence  
+		to: ((self tableNamed: 'NWSEQUENCE') fieldNamed: 'id').
+	
+	
 	
 ]
 
@@ -1126,6 +1331,51 @@ NewWaveGlorpDescriptorSystem >> tableForNWPROCESS: aTable [
 ]
 
 { #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWPROCESSHANDLER: aTable [
+	| process executor |
+	(aTable createFieldNamed: 'id' type: (platform serial))
+		bePrimaryKey.
+	process := aTable
+		createFieldNamed: 'process_id' 
+		type: platform integer. 
+	executor := aTable
+		createFieldNamed: 'executor_id' 
+		type: platform integer.
+	aTable
+		addForeignKeyFrom: process  
+		to: ((self tableNamed: 'NWPROCESS') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: executor  
+		to: ((self tableNamed: 'NWEXECUTOR') fieldNamed: 'id').
+	
+	
+	
+]
+
+{ #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWPROCESSHANDLER_ON_NWACTIVATION: aTable [
+	| processHandlerField nodeField activationField |
+	processHandlerField  := (aTable
+		createFieldNamed: 'processHandler_id' 
+		type: platform integer) bePrimaryKey.
+	nodeField := (aTable
+		createFieldNamed: 'node_id' 
+		type: platform integer) bePrimaryKey. 
+	activationField := (aTable
+		createFieldNamed: 'activation_id' 
+		type: platform integer) bePrimaryKey. 
+	aTable
+		addForeignKeyFrom: processHandlerField   
+		to: ((self tableNamed: 'NWPROCESSHANDLER') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: nodeField   
+		to: ((self tableNamed: 'NWNODE') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: activationField 
+		to: ((self tableNamed: 'NWACTIVATION') fieldNamed: 'id').
+]
+
+{ #category : #tables }
 NewWaveGlorpDescriptorSystem >> tableForNWSEQUENCE: aTable [
 	| sourceRefField targetRefField |
 	(aTable createFieldNamed: 'id' type: (self sequenceTypeNamed: 'parent_seq'))
@@ -1150,6 +1400,23 @@ NewWaveGlorpDescriptorSystem >> tableForNWSEQUENCE: aTable [
 		to: ((self tableNamed: 'NWNODE') fieldNamed: 'id').  	
 	
 	
+]
+
+{ #category : #tables }
+NewWaveGlorpDescriptorSystem >> tableForNWSEQUENCE_ON_NWFLOWHANDLER: aTable [
+	| sequenceField flowHandlerField |
+	sequenceField  := (aTable
+		createFieldNamed: 'sequence_id' 
+		type: platform integer) bePrimaryKey.
+	flowHandlerField := (aTable
+		createFieldNamed: 'flowHandler_id' 
+		type: platform integer) bePrimaryKey. 
+	aTable
+		addForeignKeyFrom: sequenceField   
+		to: ((self tableNamed: 'NWSEQUENCE') fieldNamed: 'id').
+	aTable
+		addForeignKeyFrom: flowHandlerField 
+		to: ((self tableNamed: 'NWFLOWHANDLER') fieldNamed: 'id').
 ]
 
 { #category : #tables }

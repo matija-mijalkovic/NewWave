@@ -36,6 +36,7 @@ Class {
 	#name : #NWProcessHandler,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'mainExecutor',
 		'joinHandler',
 		'subExecutors',
@@ -145,6 +146,12 @@ NWProcessHandler >> addTaskToServer: task nwClassDescription: nWClassDecsription
 		
 		engine server addTaskWrapper: nWClassDecsription.
 		^ nWClassDecsription.
+]
+
+{ #category : #accessing }
+NWProcessHandler >> continueProcess [
+	processScheduler start.
+	mainExecutor continueExecution.
 ]
 
 { #category : #accessing }

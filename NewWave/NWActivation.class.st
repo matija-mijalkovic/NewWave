@@ -2,6 +2,7 @@ Class {
 	#name : #NWActivation,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'node',
 		'executor',
 		'properties',
@@ -54,6 +55,16 @@ NWActivation >> executor: anExecutor [
 ]
 
 { #category : #accessing }
+NWActivation >> id [
+	^ id
+]
+
+{ #category : #accessing }
+NWActivation >> id: anId [
+	id := anId 
+]
+
+{ #category : #accessing }
 NWActivation >> initialize [ 
 	super initialize.
 	properties := Dictionary new.
@@ -81,6 +92,13 @@ NWActivation >> printOn: aStream [
 { #category : #accessing }
 NWActivation >> properties [
 	^ properties
+]
+
+{ #category : #accessing }
+NWActivation >> release [
+	executor := nil.
+	node := nil.
+	properties := nil.
 ]
 
 { #category : #accessing }

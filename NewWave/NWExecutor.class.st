@@ -32,6 +32,7 @@ Class {
 	#name : #NWExecutor,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'waveAnnouncer',
 		'taskResult',
 		'flowHandler',
@@ -78,6 +79,25 @@ NWExecutor >> activations [
 ]
 
 { #category : #running }
+NWExecutor >> continueExecution [
+ 	self createNewWorker. 
+	self execute: (flowHandler getPreviousElement).
+]
+
+{ #category : #running }
+NWExecutor >> createNewWorker [
+	| worker |
+	worker := TKTWorker new.
+	worker start.
+		('Starting worker on process '
+			, Processor activeProcess identityHash asString) traceCr.
+		('Worker process is ' , worker process identityHash asString)
+			traceCr.
+	workers at: worker name put: worker.
+	flowHandler workerid: worker name.
+]
+
+{ #category : #running }
 NWExecutor >> execute: elem [
 	| elemHandler executor |
 	elemHandler := NWBehaviorHandler new.
@@ -99,6 +119,16 @@ NWExecutor >> flowHandler [
 { #category : #accessing }
 NWExecutor >> flowHandler: aFlowHandler [
 	flowHandler := aFlowHandler
+]
+
+{ #category : #accessing }
+NWExecutor >> id [
+	^ id
+]
+
+{ #category : #accessing }
+NWExecutor >> id: anId [
+	id := anId 
 ]
 
 { #category : #initialization }
@@ -155,6 +185,20 @@ NWExecutor >> taskResult [
 { #category : #accessing }
 NWExecutor >> taskResult: anObject [
 	taskResult := anObject
+]
+
+{ #category : #accessing }
+NWExecutor >> taskResultAsJSON [
+	| exporter |
+	exporter := NWClassJSONExporter new.
+	^ exporter exportOneNWClassDescriptionToJSON: taskResult. 
+]
+
+{ #category : #accessing }
+NWExecutor >> taskResultAsJSON: json [
+	| importer |
+	importer := NWClassJSONImporter new.
+	taskResult := importer importObjectFromJSON: json.
 ]
 
 { #category : #accessing }

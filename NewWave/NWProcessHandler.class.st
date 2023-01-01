@@ -241,6 +241,16 @@ NWProcessHandler >> release [
 ]
 
 { #category : #accessing }
+NWProcessHandler >> running [
+	^ workList running.
+]
+
+{ #category : #accessing }
+NWProcessHandler >> running: aListOfRunning [
+	workList running: aListOfRunning. 
+]
+
+{ #category : #accessing }
 NWProcessHandler >> startProcess [
 	processScheduler start.
 	mainExecutor tryToExecuteNext.

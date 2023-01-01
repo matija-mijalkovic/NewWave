@@ -8,7 +8,9 @@ Class {
 		'properties',
 		'state',
 		'activated',
-		'completed'
+		'completed',
+		'activationTime',
+		'completionTime'
 	],
 	#category : #'NewWave-Engine'
 }
@@ -24,6 +26,12 @@ NWActivation class >> node: aNode executor: anExecutor [
 	yourself
 ]
 
+{ #category : #activation }
+NWActivation >> activate [
+	activated := true.
+	activationTime := DateAndTime current.
+]
+
 { #category : #accessing }
 NWActivation >> activated [
 	^ activated 
@@ -34,6 +42,22 @@ NWActivation >> activated: aBoolean [
 	activated := aBoolean
 ]
 
+{ #category : #activation }
+NWActivation >> activationTime [
+	^ activationTime 
+]
+
+{ #category : #activation }
+NWActivation >> activationTime: aTime [
+	activationTime := aTime. 
+]
+
+{ #category : #activation }
+NWActivation >> complete [
+	completed := true.
+	completionTime := DateAndTime current.
+]
+
 { #category : #accessing }
 NWActivation >> completed [
 	^ completed
@@ -42,6 +66,16 @@ NWActivation >> completed [
 { #category : #accessing }
 NWActivation >> completed: aBoolean [
 	completed := aBoolean
+]
+
+{ #category : #activation }
+NWActivation >> completionTime [
+	^ completionTime 
+]
+
+{ #category : #activation }
+NWActivation >> completionTime: aTime [
+	completionTime := aTime. 
 ]
 
 { #category : #accessing }

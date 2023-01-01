@@ -76,6 +76,11 @@ WaveEngine >> assignTask: aTaskId onProcess: aProcessId withNewUser: aUserName [
 	elemToExecute node user: (self userManagement findUserByName: (aUserName)). 
 ]
 
+{ #category : #accessing }
+WaveEngine >> clearHandlers [
+	processHandlers := Dictionary new.
+]
+
 { #category : #adding }
 WaveEngine >> continueProcess: aProcessHandler name: aProcessName [
 	aProcessHandler engine: self. 

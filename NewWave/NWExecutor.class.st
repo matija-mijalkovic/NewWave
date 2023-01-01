@@ -37,7 +37,8 @@ Class {
 		'taskResult',
 		'flowHandler',
 		'workers',
-		'processHandler'
+		'processHandler',
+		'activations'
 	],
 	#category : #'NewWave-Engine'
 }
@@ -66,7 +67,8 @@ NWExecutor class >> initialNode: node processHandler: aProcessHandler [
 { #category : #running }
 NWExecutor >> activationForNode: aNode [
 	| activation |
-	activation := self activations at: aNode ifAbsent: [ self newActivationForNode: aNode ].
+	aNode id ifNil: [ self error: 'task id is nil' ].
+	activation := self activations at: (aNode id) ifAbsent: [ self newActivationForNode: aNode ].
 	" Treba dodati proveru o workListi i o tome sta se izvrsava, odnosno ako je vec dodata jednom aktivacija ne bi je trebalo dodavati drugi put."
 	"self workList addToRunning: activation."
 	^ activation.
@@ -76,6 +78,18 @@ NWExecutor >> activationForNode: aNode [
 { #category : #running }
 NWExecutor >> activations [
 	^ processHandler activations
+	"^ activations"
+]
+
+{ #category : #adding }
+NWExecutor >> addActivation: aNode [
+	| activation |
+	activations ifNotEmpty: [ 	
+		(activations last) completed ifFalse: [ ^ (activations last) ]. 
+		 ].
+	activation := activations addLast: (NWActivation node: aNode executor: self).
+	^ activation
+	
 ]
 
 { #category : #running }
@@ -104,6 +118,7 @@ NWExecutor >> execute: elem [
 	executor := elemHandler behaviors at: elem ctype.
 	" Ideja je da bi execute mogao da se pozove i naknadno, odnosno ukoliko je aktivacija vec napravljena ili treba da se nastavi nakon prekida."
 	self workList addToRunning: (self activationForNode: elem).
+	"self workList addToRunning: (self addActivation: elem)."
 	executor performExecution: elem executor: self.
 	
 	
@@ -137,13 +152,14 @@ NWExecutor >> initialize [
 	super initialize.
 	waveAnnouncer := Announcer new.
 	workers := Dictionary new.
+	activations := OrderedCollection new.
 ]
 
 { #category : #running }
 NWExecutor >> newActivationForNode: aNode [
 	| activation |
-	(self activations includesKey: aNode) ifTrue: [ self error: 'Activation already exists!'].
-	activation := self activations at: aNode put: (NWActivation node: aNode executor: self).
+	(self activations includesKey: (aNode id)) ifTrue: [ self error: 'Activation already exists!'].
+	activation := self activations at: (aNode id) put: (NWActivation node: aNode executor: self).
 	"engine logNewActivation: activation on: self forNode: aNode."
 	^ activation.
 ]
@@ -198,7 +214,8 @@ NWExecutor >> taskResultAsJSON [
 NWExecutor >> taskResultAsJSON: json [
 	| importer |
 	importer := NWClassJSONImporter new.
-	taskResult := importer importObjectFromJSON: json.
+	[ taskResult := importer importObjectFromJSON: json ] on: Error 
+	do: [ taskResult := NeoJSONReader fromString: json ].
 ]
 
 { #category : #accessing }
@@ -214,6 +231,7 @@ NWExecutor >> tryToExecuteNext [
 NWExecutor >> tryToExecuteNext: aCompletedNode [
 	| tmp |
 	self workList addToCompleted: (self activationForNode: aCompletedNode).
+	"self workList addToCompleted: (activations last)."
 	tmp := self shouldExecuteNextNewHandler.	
 	processHandler stopNotRunningBoundaryEvents.
 	"So this should happen once, when the element should be activated and executed"

@@ -2,6 +2,7 @@ Class {
 	#name : #NWSubExecutor,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'executor',
 		'previousNode',
 		'processHandler'
@@ -29,6 +30,16 @@ NWSubExecutor >> executor [
 { #category : #finalization }
 NWSubExecutor >> executor: anExecutor [ 
 	executor := anExecutor
+]
+
+{ #category : #finalization }
+NWSubExecutor >> id [
+	^ id
+]
+
+{ #category : #finalization }
+NWSubExecutor >> id: anId [
+	id := anId. 
 ]
 
 { #category : #finalization }

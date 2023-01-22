@@ -9,7 +9,8 @@ Class {
 
 { #category : #adding }
 NWWorkList >> addToCompleted: activation [
-	activation completed: true.
+	activation complete.
+	"activation completed: true."
 	"Proveriti da li je vec aktivacija pocela, ako je pocela podigni error
 	running remove: activation.
 	completed add: activation."
@@ -21,7 +22,7 @@ NWWorkList >> addToCompleted: activation [
 NWWorkList >> addToRunning: activation [
 	"Proveriti da li je vec aktivacija pocela, ako je pocela podigni error"
 	"running add: activation"
-	activation activated: true.
+	activation activate.
 	running indexOf: activation ifAbsent: [ running add: activation ].
 	"Treba zabaleziti za istoriju.... noteRunOf: anActivation in: self"
 	
@@ -41,4 +42,10 @@ NWWorkList >> initialize [
 { #category : #adding }
 NWWorkList >> running [
 	^ running select: [ :each | each activated ].
+]
+
+{ #category : #adding }
+NWWorkList >> running: aListOfRunning [
+	running := aListOfRunning.  
+	
 ]

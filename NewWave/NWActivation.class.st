@@ -2,12 +2,15 @@ Class {
 	#name : #NWActivation,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'node',
 		'executor',
 		'properties',
 		'state',
 		'activated',
-		'completed'
+		'completed',
+		'activationTime',
+		'completionTime'
 	],
 	#category : #'NewWave-Engine'
 }
@@ -23,6 +26,12 @@ NWActivation class >> node: aNode executor: anExecutor [
 	yourself
 ]
 
+{ #category : #activation }
+NWActivation >> activate [
+	activated := true.
+	activationTime := DateAndTime current.
+]
+
 { #category : #accessing }
 NWActivation >> activated [
 	^ activated 
@@ -31,6 +40,22 @@ NWActivation >> activated [
 { #category : #accessing }
 NWActivation >> activated: aBoolean [
 	activated := aBoolean
+]
+
+{ #category : #activation }
+NWActivation >> activationTime [
+	^ activationTime 
+]
+
+{ #category : #activation }
+NWActivation >> activationTime: aTime [
+	activationTime := aTime. 
+]
+
+{ #category : #activation }
+NWActivation >> complete [
+	completed := true.
+	completionTime := DateAndTime current.
 ]
 
 { #category : #accessing }
@@ -43,6 +68,16 @@ NWActivation >> completed: aBoolean [
 	completed := aBoolean
 ]
 
+{ #category : #activation }
+NWActivation >> completionTime [
+	^ completionTime 
+]
+
+{ #category : #activation }
+NWActivation >> completionTime: aTime [
+	completionTime := aTime. 
+]
+
 { #category : #accessing }
 NWActivation >> executor [
 	^ executor
@@ -51,6 +86,16 @@ NWActivation >> executor [
 { #category : #accessing }
 NWActivation >> executor: anExecutor [
 	executor := anExecutor
+]
+
+{ #category : #accessing }
+NWActivation >> id [
+	^ id
+]
+
+{ #category : #accessing }
+NWActivation >> id: anId [
+	id := anId 
 ]
 
 { #category : #accessing }
@@ -81,6 +126,13 @@ NWActivation >> printOn: aStream [
 { #category : #accessing }
 NWActivation >> properties [
 	^ properties
+]
+
+{ #category : #accessing }
+NWActivation >> release [
+	executor := nil.
+	node := nil.
+	properties := nil.
 ]
 
 { #category : #accessing }

@@ -77,6 +77,18 @@ WaveEngine >> assignTask: aTaskId onProcess: aProcessId withNewUser: aUserName [
 ]
 
 { #category : #accessing }
+WaveEngine >> clearHandlers [
+	processHandlers := Dictionary new.
+]
+
+{ #category : #adding }
+WaveEngine >> continueProcess: aProcessHandler name: aProcessName [
+	aProcessHandler engine: self. 
+	processHandlers at: aProcessName put: aProcessHandler.
+	aProcessHandler continueProcess.
+]
+
+{ #category : #accessing }
 WaveEngine >> engineAnnouncer [
 	^ engineAnnouncer 
 ]

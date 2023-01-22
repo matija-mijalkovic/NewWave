@@ -14,6 +14,7 @@ Class {
 	#name : #NWFlowHandler,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'node',
 		'workerid',
 		'currSeq',
@@ -56,6 +57,21 @@ NWFlowHandler >> getNextElement [
 	].
 	
 	
+]
+
+{ #category : #accessing }
+NWFlowHandler >> getPreviousElement [
+	^ currSeq sourceRef. 
+]
+
+{ #category : #accessing }
+NWFlowHandler >> id [
+	^ id
+]
+
+{ #category : #accessing }
+NWFlowHandler >> id: anId [
+	id := anId 
 ]
 
 { #category : #accessing }

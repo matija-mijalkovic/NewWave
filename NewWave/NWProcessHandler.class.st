@@ -36,6 +36,7 @@ Class {
 	#name : #NWProcessHandler,
 	#superclass : #Object,
 	#instVars : [
+		'id',
 		'mainExecutor',
 		'joinHandler',
 		'subExecutors',
@@ -148,6 +149,12 @@ NWProcessHandler >> addTaskToServer: task nwClassDescription: nWClassDecsription
 ]
 
 { #category : #accessing }
+NWProcessHandler >> continueProcess [
+	processScheduler start.
+	mainExecutor continueExecution.
+]
+
+{ #category : #accessing }
 NWProcessHandler >> engine [
 	^ engine
 ]
@@ -231,6 +238,16 @@ NWProcessHandler >> release [
 	processScheduler := nil.
 	mainExecutor := nil.
 	process := nil.
+]
+
+{ #category : #accessing }
+NWProcessHandler >> running [
+	^ workList running.
+]
+
+{ #category : #accessing }
+NWProcessHandler >> running: aListOfRunning [
+	workList running: aListOfRunning. 
 ]
 
 { #category : #accessing }

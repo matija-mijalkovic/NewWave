@@ -209,7 +209,7 @@ ExampleExecutions class >> returnExampleProcessJobPosting [
 	se description: 'Start'.
 
 	t1 := NWUserTask new.
-	t1 id: '123'.
+	"t1 id: '123'."
 	t1 description: 'Reporting job opening.'.
 	t1 name: 'Job opening'.
 	t1 group: (management findGroup: '1').
@@ -227,7 +227,7 @@ ExampleExecutions class >> returnExampleProcessJobPosting [
 	t1 value: 'Job opening value'.
 	
 	t2 := NWUserTask new.
-	t2 id: '124'.
+	"t2 id: '124'."
 	t2 description: 'Write job posting'.
 	t2 name: 'Job Posting'.
 	t2 group: (management findGroup: '2').
@@ -246,7 +246,7 @@ ExampleExecutions class >> returnExampleProcessJobPosting [
 	
 	
 	t3 := NWUserTask new.
-	t3 id: '999'.
+	"t3 id: '999'."
 	t3 description: 'Review job posting.'.
 	t3 name: 'Job posting review'.
 	t3 group: (management findGroup: '1').
@@ -267,6 +267,7 @@ ExampleExecutions class >> returnExampleProcessJobPosting [
 	split1 addOutgoingEdge: ee withCondition: [ :x | (x properties at: 4) varValue = true ].
 	split1 addOutgoingEdge: t2 withCondition: [ :x | (x properties at: 4) varValue = false ].
 	
+	"process := NWProcess new name: 'Process 1'; initialFlowElement: se."
 	process := NWProcess id: '1' name: 'Process 1' initialFlowElement: se.
 	process managementName: 'businessDepartment'.
 	process addDataObject: do.
@@ -303,11 +304,56 @@ ExampleExecutions class >> returnIntermediateCatchEventProcess [
 
 { #category : #'as yet unclassified' }
 ExampleExecutions class >> returnJobPostingManagement [
+	| userManagement user1 user2 group1 group2 membership1 membership2 |
 
-	^ NWUserManagement 				  						   
+	"^ NWUserManagement 				  						   
 		pathToUsers:'/Users/sebastijan.kaplar/Desktop/NewWave-JobPosting-Management/users.json'
 		pathToGroups: '/Users/sebastijan.kaplar/Desktop/NewWave-JobPosting-Management/groups.json'
-		pathToMemberships: '/Users/sebastijan.kaplar/Desktop/NewWave-JobPosting-Management/membership.json'.
+		pathToMemberships: '/Users/sebastijan.kaplar/Desktop/NewWave-JobPosting-Management/membership.json'."
+		
+	userManagement := NWUserManagement new.
+	
+	user1 := NWUser new.
+	user1 userId: '1'.
+	user1 firstname: 'Tast'.
+	user1 lastname: 'User'.
+	user1 email: 'user1@gmail.com'.
+	user1 username: 'user1'.
+	user1 password: 'user1'.
+
+	userManagement addUser: user1.
+	
+	user2 := NWUser new.
+	user2 userId: '2'.
+	user2 firstname: 'Pera'.
+	user2 lastname: 'Peric'.
+	user2 email: 'user2@gmail.com'.
+	user2 username: 'user2'.
+	user2 password: 'user2'.
+
+	userManagement addUser: user2.
+
+	group1 := NWGroup new.
+	group1 groupId: '1'.
+	group1 groupName: 'admin'.
+	userManagement addGroup: group1.
+	
+	group2 := NWGroup new.
+	group2 groupId: '2'.
+	group2 groupName: 'users'.
+	userManagement addGroup: group2.
+	
+	membership1 := NWMembership new.
+	membership1 groupId: '1'.
+	membership1 userId: '1'.
+	userManagement addMembership: membership1.
+	
+	membership2 := NWMembership new.
+	membership2 groupId: '2'.
+	membership2 userId: '2'.
+	userManagement addMembership: membership2.
+	
+	^ userManagement
 ]
 
 { #category : #'as yet unclassified' }
@@ -609,6 +655,7 @@ ExampleExecutions class >> returnSimpleProcessForDemo [
 	t1 addOutgoingEdge: ee.
 	
 	process := NWProcess id: '1' name: 'Process 1' initialFlowElement: se.
+	"process := NWProcess new name: 'Process 1'; initialFlowElement: se."
 	process managementName: 'acme'.
 	process addDataObject: do.
 

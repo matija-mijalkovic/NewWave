@@ -67,11 +67,23 @@ NWUserTask >> result: aResult [
 
 { #category : #accessing }
 NWUserTask >> user [
-	^ user
+	^ user.
 ]
 
 { #category : #accessing }
 NWUserTask >> user: anObject [
+	user := anObject
+]
+
+{ #category : #'as yet unclassified' }
+NWUserTask >> userNotNull [
+	(user isMemberOf: NWNullUser) 
+		ifTrue: [ ^ nil ]  
+		ifFalse: [ ^ user ].
+]
+
+{ #category : #'as yet unclassified' }
+NWUserTask >> userNotNull: anObject [
 	user := anObject
 ]
 

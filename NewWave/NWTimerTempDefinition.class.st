@@ -32,6 +32,17 @@ NWTimerTempDefinition >> every: anEvery [
 	every := anEvery
 ]
 
+{ #category : #'as yet unclassified' }
+NWTimerTempDefinition >> everyAsSeconds [
+	^ every asSeconds 
+]
+
+{ #category : #'as yet unclassified' }
+NWTimerTempDefinition >> everyAsSeconds: aSeconds [
+	every := Duration new.
+	every seconds: aSeconds nanoSeconds: 0.
+]
+
 { #category : #accessing }
 NWTimerTempDefinition >> repeat [ 
 	^ repeat

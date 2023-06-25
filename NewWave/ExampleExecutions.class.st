@@ -201,7 +201,7 @@ ExampleExecutions class >> returnExampleProcess1 [
 { #category : #'as yet unclassified' }
 ExampleExecutions class >> returnExampleProcessJobPosting [
 	
-	| se t1 t2 t3 adresa1 do do2 do3 jobPostingEntity ee process management split1 |
+	| se t1 t2 t3 jobOpeningEntity do do2 do3 jobPostingEntity ee process management split1 |
 										
 	management := ExampleExecutions returnJobPostingManagement.						
 										
@@ -214,12 +214,12 @@ ExampleExecutions class >> returnExampleProcessJobPosting [
 	t1 name: 'Job opening'.
 	t1 group: (management findGroup: '1').
 
-	adresa1 := NWJobOpening example1.
+	jobOpeningEntity := NWJobOpening example1.
 
 	do := NWDataObject new.
-	do itemDef structureRef: adresa1. 
-	"do valuedDataObject: adresa1."
-	do valuedDataObject: (NWClassDescriptionGenerator dataObject: adresa1) createClassDescription.
+	do itemDef structureRef: jobOpeningEntity. 
+	"do valuedDataObject: jobOpeningEntity."
+	do valuedDataObject: (NWClassDescriptionGenerator dataObject: jobOpeningEntity) createClassDescription.
 	do name: 'Job opening example'.
 
 	t1 addDataOutputAssociation: do.
@@ -315,8 +315,8 @@ ExampleExecutions class >> returnJobPostingManagement [
 	
 	user1 := NWUser new.
 	user1 userId: '1'.
-	user1 firstname: 'Tast'.
-	user1 lastname: 'User'.
+	user1 firstname: 'Mika'.
+	user1 lastname: 'Mikic'.
 	user1 email: 'user1@gmail.com'.
 	user1 username: 'user1'.
 	user1 password: 'user1'.
